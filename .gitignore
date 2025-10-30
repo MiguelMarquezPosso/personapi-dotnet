@@ -1,0 +1,16 @@
+## Ignorar archivos de Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.vsidx
+*.vspid
+
+## Ignorar carpetas de compilación
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+
+## Ignorar archivos de configuración local
+appsettings.Development.local.json
