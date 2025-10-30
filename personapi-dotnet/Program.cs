@@ -9,6 +9,8 @@ builder.Services.AddDbContext<PersonaDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("PersonaDbContext"));
 });
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -26,7 +28,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapControllers();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.Run();
