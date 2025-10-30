@@ -2,6 +2,11 @@
 
 Proyecto monolito MVC + DAO desarrollado en **.NET 8** con **SQL Server 2022** y desplegado mediante **Docker Compose**.
 
+## Integrantes
+- [Miguel Posso](https://github.com/MiguelMarquezPosso)
+- [Adrian Ruiz](https://github.com/adrianrrruiz)
+- [Juan Galvis](https://github.com/felo312)
+
 ## 🚀 Requisitos previos
 - Docker Desktop instalado y en ejecución
 - Puerto **8080** libre para la API
