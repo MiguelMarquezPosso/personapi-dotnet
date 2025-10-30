@@ -1,50 +1,163 @@
-using Microsoft.AspNetCore.Mvc;
-using personapi_dotnet.Interfaces;
-using personapi_dotnet.Models.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using personapi_dotnet.Models;
 
 namespace personapi_dotnet.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class TelefonoController : ControllerBase
+    public class TelefonoController : Controller
     {
-        private readonly ITelefonoRepository _repo;
+        private readonly PersonaDbContext _context;
 
-        public TelefonoController(ITelefonoRepository repo)
+        public TelefonoController(PersonaDbContext context)
         {
-            _repo = repo;
+            _context = context;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _repo.GetAllAsync());
-
-        [HttpGet("{num}")]
-        public async Task<IActionResult> GetById(string num)
+        // GET: Telefono
+        public async Task<IActionResult> Index()
         {
-            var telefono = await _repo.GetByIdAsync(num);
-            return telefono == null ? NotFound() : Ok(telefono);
+            var personaDbContext = _context.Telefonos.Include(t => t.DuenioNavigation);
+            return View(await personaDbContext.ToListAsync());
         }
 
+        // GET: Telefono/Details/5
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var telefono = await _context.Telefonos
+                .Include(t => t.DuenioNavigation)
+                .FirstOrDefaultAsync(m => m.Num == id);
+            if (telefono == null)
+            {
+                return NotFound();
+            }
+
+            return View(telefono);
+        }
+
+        // GET: Telefono/Create
+        public IActionResult Create()
+        {
+            ViewData["Duenio"] = new SelectList(_context.Personas, "Cc", "Cc");
+            return View();
+        }
+
+        // POST: Telefono/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Telefono telefono)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Num,Oper,Duenio")] Telefono telefono)
         {
-            var created = await _repo.AddAsync(telefono);
-            return CreatedAtAction(nameof(GetById), new { num = created.Num }, created);
+            if (ModelState.IsValid)
+            {
+                _context.Add(telefono);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["Duenio"] = new SelectList(_context.Personas, "Cc", "Cc", telefono.Duenio);
+            return View(telefono);
         }
 
-        [HttpPut("{num}")]
-        public async Task<IActionResult> Update(string num, [FromBody] Telefono telefono)
+        // GET: Telefono/Edit/5
+        public async Task<IActionResult> Edit(string id)
         {
-            var updated = await _repo.UpdateAsync(num, telefono);
-            return updated == null ? NotFound() : Ok(updated);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var telefono = await _context.Telefonos.FindAsync(id);
+            if (telefono == null)
+            {
+                return NotFound();
+            }
+            ViewData["Duenio"] = new SelectList(_context.Personas, "Cc", "Cc", telefono.Duenio);
+            return View(telefono);
         }
 
-        [HttpDelete("{num}")]
-        public async Task<IActionResult> Delete(string num)
+        // POST: Telefono/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, [Bind("Num,Oper,Duenio")] Telefono telefono)
         {
-            var deleted = await _repo.DeleteAsync(num);
-            return deleted ? NoContent() : NotFound();
+            if (id != telefono.Num)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(telefono);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TelefonoExists(telefono.Num))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["Duenio"] = new SelectList(_context.Personas, "Cc", "Cc", telefono.Duenio);
+            return View(telefono);
+        }
+
+        // GET: Telefono/Delete/5
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var telefono = await _context.Telefonos
+                .Include(t => t.DuenioNavigation)
+                .FirstOrDefaultAsync(m => m.Num == id);
+            if (telefono == null)
+            {
+                return NotFound();
+            }
+
+            return View(telefono);
+        }
+
+        // POST: Telefono/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var telefono = await _context.Telefonos.FindAsync(id);
+            if (telefono != null)
+            {
+                _context.Telefonos.Remove(telefono);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool TelefonoExists(string id)
+        {
+            return _context.Telefonos.Any(e => e.Num == id);
         }
     }
 }

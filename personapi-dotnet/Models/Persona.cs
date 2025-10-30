@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace personapi_dotnet.Models.Entities;
+namespace personapi_dotnet.Models;
 
 public partial class Persona
 {

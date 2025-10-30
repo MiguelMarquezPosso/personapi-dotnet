@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   personapi:
     build: ./personapi-dotnet
@@ -7,7 +5,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
       - sqlserver
 
@@ -16,11 +14,11 @@ services:
     container_name: sqlserver
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=Arqui2025
+      - MSSQL_SA_PASSWORD=Arqui2025!
     ports:
       - "1433:1433"
-    # volumes:
-    #   - sql_data:/var/opt/mssql
+    volumes:
+      - sql_data:/var/opt/mssql
 
 volumes:
   sql_data:

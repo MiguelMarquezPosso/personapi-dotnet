@@ -1,50 +1,156 @@
-using Microsoft.AspNetCore.Mvc;
-using personapi_dotnet.Interfaces;
-using personapi_dotnet.Models.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using personapi_dotnet.Models;
 
 namespace personapi_dotnet.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProfesionController : ControllerBase
+    public class ProfesionController : Controller
     {
-        private readonly IProfesionRepository _repo;
+        private readonly PersonaDbContext _context;
 
-        public ProfesionController(IProfesionRepository repo)
+        public ProfesionController(PersonaDbContext context)
         {
-            _repo = repo;
+            _context = context;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _repo.GetAllAsync());
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        // GET: Profesion
+        public async Task<IActionResult> Index()
         {
-            var profesion = await _repo.GetByIdAsync(id);
-            return profesion == null ? NotFound() : Ok(profesion);
+            return View(await _context.Profesions.ToListAsync());
         }
 
+        // GET: Profesion/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var profesion = await _context.Profesions
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (profesion == null)
+            {
+                return NotFound();
+            }
+
+            return View(profesion);
+        }
+
+        // GET: Profesion/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Profesion/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Profesion profesion)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Nom,Des")] Profesion profesion)
         {
-            var created = await _repo.AddAsync(profesion);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            if (ModelState.IsValid)
+            {
+                _context.Add(profesion);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(profesion);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Profesion profesion)
+        // GET: Profesion/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            var updated = await _repo.UpdateAsync(id, profesion);
-            return updated == null ? NotFound() : Ok(updated);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var profesion = await _context.Profesions.FindAsync(id);
+            if (profesion == null)
+            {
+                return NotFound();
+            }
+            return View(profesion);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        // POST: Profesion/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nom,Des")] Profesion profesion)
         {
-            var deleted = await _repo.DeleteAsync(id);
-            return deleted ? NoContent() : NotFound();
+            if (id != profesion.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(profesion);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProfesionExists(profesion.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(profesion);
+        }
+
+        // GET: Profesion/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var profesion = await _context.Profesions
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (profesion == null)
+            {
+                return NotFound();
+            }
+
+            return View(profesion);
+        }
+
+        // POST: Profesion/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var profesion = await _context.Profesions.FindAsync(id);
+            if (profesion != null)
+            {
+                _context.Profesions.Remove(profesion);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool ProfesionExists(int id)
+        {
+            return _context.Profesions.Any(e => e.Id == id);
         }
     }
 }

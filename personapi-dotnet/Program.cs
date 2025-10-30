@@ -1,30 +1,32 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using personapi_dotnet.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Agregar servicios al contenedor
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<PersonaDbContext>(options =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "PersonAPI .NET 8",
-        Version = "v1",
-        Description = "API REST para gestión de personas, profesiones, estudios y teléfonos"
-    });
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PersonaDbContext"));
 });
 
 var app = builder.Build();
 
-// Habilitar Swagger SIEMPRE
-app.UseSwagger();
-app.UseSwaggerUI(c =>
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "PersonAPI .NET 8 v1");
-    c.RoutePrefix = string.Empty; // Para abrir Swagger directamente en /
-});
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+//app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
 
 app.UseAuthorization();
-app.MapControllers();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}");
 app.Run();
