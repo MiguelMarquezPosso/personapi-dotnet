@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,52 +7,115 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/personapi_dotnet.styles.css" asp-append-version="true" />
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: "Inter", "Segoe UI", Arial, sans-serif;
+            background-color: #f5f6fa;
+            color: #2f3640;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar moderna */
+        .navbar {
+            background-color: #1f2937 !important;
+            padding: 0.8rem 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #f9fafb !important;
+        }
+
+        .nav-link {
+            color: #d1d5db !important;
+            font-weight: 500;
+            margin-right: 0.8rem;
+            transition: color 0.2s ease;
+        }
+
+            .nav-link:hover {
+                color: #ffffff !important;
+            }
+
+            .nav-link.text-warning {
+                color: #facc15 !important;
+            }
+
+        /* Contenedor principal */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 30px 15px;
+        }
+
+        .content-box {
+            width: 100%;
+            max-width: 1100px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Footer fijo */
+        footer {
+            background-color: #111827;
+            color: #9ca3af;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+            footer a {
+                color: #facc15;
+                text-decoration: none;
+            }
+
+                footer a:hover {
+                    color: #fde68a;
+                }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Persona API</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">📘 Persona API</a>
+                <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href='@Url.Content("~/Home")'>Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Persona" asp-action="Index">Personas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Profesion" asp-action="Index">Profesiones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Estudios" asp-action="Index">Estudios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Telefono" asp-action="Index">Teléfonos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-warning" href="/swagger" target="_blank">API Docs</a>
-                        </li>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href='@Url.Content("~/Home")'>Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Persona" asp-action="Index">Personas</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Profesion" asp-action="Index">Profesiones</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Estudios" asp-action="Index">Estudios</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Telefono" asp-action="Index">Teléfonos</a></li>
+                        <li class="nav-item"><a class="nav-link text-warning" href="/swagger" target="_blank">API Docs</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Persona API - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <main>
+        <div class="content-box">
+            @RenderBody()
         </div>
+    </main>
+
+    <footer>
+        &copy; 2025 - Persona API · <a target="_blank" href="https://github.com/MiguelMarquezPosso/personapi-dotnet">GitHub</a>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

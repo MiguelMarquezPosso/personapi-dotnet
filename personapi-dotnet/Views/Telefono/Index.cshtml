@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Teléfonos</h1>
+<h1>📞 Teléfonos</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,10 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Oper)
+                Operador
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DuenioNavigation)
+                Número
+            </th>
+            <th>
+                Nombre del dueño
+            </th>
+            <th>
+                Cédula del dueño
             </th>
             <th></th>
         </tr>
@@ -26,6 +32,12 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Oper)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Num)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DuenioNavigation.Nombre)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DuenioNavigation.Cc)

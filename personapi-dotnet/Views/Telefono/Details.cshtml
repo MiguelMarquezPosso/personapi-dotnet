@@ -7,20 +7,32 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Telefono</h4>
+    <h4>Teléfono</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Oper)
+        <dt class="col-sm-2">
+            Operador
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Oper)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DuenioNavigation)
+        <dt class="col-sm-2">
+            Número
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Num)
+        </dd>
+        <dt class="col-sm-2">
+            Cédula del dueño
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DuenioNavigation.Cc)
+        </dd>
+        <dt class="col-sm-2">
+            Nombre del dueño
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DuenioNavigation.Nombre)
         </dd>
     </dl>
 </div>
