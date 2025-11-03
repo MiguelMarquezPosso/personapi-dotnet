@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using personapi_dotnet.Models;
+using personapi_dotnet.Models.Entities;
 using personapi_dotnet.Interfaces;
 
 namespace personapi_dotnet.Controllers.Web
@@ -140,7 +140,7 @@ namespace personapi_dotnet.Controllers.Web
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             await _telefonoRepository.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
         }
 
         private async Task<bool> TelefonoExists(string id)

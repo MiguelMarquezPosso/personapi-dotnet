@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using personapi_dotnet.Models;
+using personapi_dotnet.Models.Entities;
 using personapi_dotnet.Interfaces;
 
 namespace personapi_dotnet.Controllers.Web

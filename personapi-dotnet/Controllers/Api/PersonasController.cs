@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using personapi_dotnet.Models;
+using personapi_dotnet.Models.Entities;
 using personapi_dotnet.Interfaces;
 
 namespace personapi_dotnet.Controllers.Api

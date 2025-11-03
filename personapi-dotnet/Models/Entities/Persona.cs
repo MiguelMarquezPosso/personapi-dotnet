@@ -1,4 +1,4 @@
-﻿namespace personapi_dotnet.Models;
+﻿namespace personapi_dotnet.Models.Entities;
 
 public partial class Persona
 {
