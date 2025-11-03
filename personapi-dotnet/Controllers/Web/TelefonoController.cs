@@ -79,7 +79,7 @@ namespace personapi_dotnet.Controllers.Web
                 return NotFound();
             }
             var personas = await _personaRepository.GetAllAsync();
-            ViewData["Duenio"] = new SelectList(personas, "Cc", "Cc", telefono.Duenio);
+            ViewData["Duenio"] = new SelectList(personas, "Cc", "Nombre", telefono.Duenio);
             return View(telefono);
         }
 
