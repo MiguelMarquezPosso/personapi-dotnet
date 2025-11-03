@@ -1,6 +1,8 @@
 ﻿# Persona API - ASP.NET MVC con API REST
 
-Proyecto monolito MVC + DAO desarrollado en **.NET 8** con **SQL Server 2022** y desplegado mediante **Docker Compose**.
+| Pruebe la aplicación _(Disponible hasta 01/12/2025)_ : [Abrir Persona API](https://smolderingly-unlarge-mariann.ngrok-free.dev/)
+
+Sistema completo de gestión de personas, profesiones, estudios y teléfonos implementado en **ASP.NET Core 8** con arquitectura **MVC + DAO** y **API REST**.
 
 ## Integrantes
 - [Miguel Posso](https://github.com/MiguelMarquezPosso)
@@ -25,10 +27,12 @@ Proyecto monolito MVC + DAO desarrollado en **.NET 8** con **SQL Server 2022** y
    docker compose up --build
    ```
 
-3. Esperar a que SQL Server termine de iniciar. Luego acceder a la API en:
-   [http://localhost:8080/home](http://localhost:8080/home)
+3. _(Solo la primera vez)_ Asegurese de crear la base de datos `persona_db` y llenarla usando el `DDL.sql` y `DML.sql`. La cadena de conexión está en `appsettings.json`:
+ 
+4. Esperar a que SQL Server termine de iniciar. Luego acceder a la API en:
+   [http://localhost:8080/Home](http://localhost:8080/Home)
 
-4. Para detener los servicios:
+5. Para detener los servicios:
    ```bash
    docker compose down
    ```
@@ -100,81 +104,15 @@ personapi-dotnet/
 └── README.md
 ```
 
-## 📋 Descripción
-Sistema completo de gestión de personas, profesiones, estudios y teléfonos implementado en ASP.NET Core 7 con arquitectura MVC y API REST.
-
-## 🏗️ Arquitectura
-- **Frontend**: ASP.NET MVC con Razor Views
-- **Backend**: API REST con Swagger Documentation
-- **Patrón**: Repository Pattern + Dependency Injection
-- **Base de Datos**: SQL Server con Entity Framework Core
-
-## 🚀 Características
-- ✅ CRUD completo para 4 entidades
-- ✅ API REST autodocumentada con Swagger
-- ✅ Interfaces web responsivas con Bootstrap
-- ✅ Separación clara entre Web MVC y API
-- ✅ Inyección de dependencias
-- ✅ Patrón Repository para reutilización
-
 ## 📊 Entidades
 1. **Persona** - Información personal
 2. **Profesion** - Catálogo de profesiones
 3. **Estudio** - Relación personas-profesiones
 4. **Telefono** - Números telefónicos
 
-## 🔧 Configuración
-
-### Prerrequisitos
-- .NET 7 SDK
-- SQL Server 2019+
-- Visual Studio 2022 o VS Code
-
-### Pasos de Instalación
-1. Clonar repositorio
-2. Ejecutar scripts SQL (DDL + DML)
-3. Configurar connection string en `appsettings.json`
-4. Ejecutar migraciones: `dotnet ef database update`
-5. Ejecutar: `dotnet run`
-
 ### URLs de Acceso
-- **Interfaz Web**: https://localhost:7000
-- **API Swagger**: https://localhost:7000/swagger
-- **API Base**: https://localhost:7000/api
-
-## 📚 Endpoints API
-
-### Personas
-- `GET /api/Personas` - Listar todas
-- `GET /api/Personas/{cc}` - Obtener por cédula
-- `POST /api/Personas` - Crear nueva
-- `PUT /api/Personas/{cc}` - Actualizar
-- `DELETE /api/Personas/{cc}` - Eliminar
-- `GET /api/Personas/count` - Contar registros
-
-### Profesiones
-- `GET /api/Profesiones` - Listar todas
-- `GET /api/Profesiones/{id}` - Obtener por ID
-- `POST /api/Profesiones` - Crear nueva
-- `PUT /api/Profesiones/{id}` - Actualizar
-- `DELETE /api/Profesiones/{id}` - Eliminar
-- `GET /api/Profesiones/count` - Contar registros
-
-### Estudios
-- `GET /api/Estudios` - Listar todos
-- `GET /api/Estudios/{idProf}/{ccPer}` - Obtener por clave compuesta
-- `POST /api/Estudios` - Crear nuevo
-- `PUT /api/Estudios/{idProf}/{ccPer}` - Actualizar
-- `DELETE /api/Estudios/{idProf}/{ccPer}` - Eliminar
-- `GET /api/Estudios/count` - Contar registros
-
-### Teléfonos
-- `GET /api/Telefonos` - Listar todos
-- `GET /api/Telefonos/{num}` - Obtener por número
-- `POST /api/Telefonos` - Crear nuevo
-- `PUT /api/Telefonos/{num}` - Actualizar
-- `DELETE /api/Telefonos/{num}` - Eliminar
-- `GET /api/Telefonos/count` - Contar registros
+- **Interfaz Web**: https://localhost:8080/Home
+- **API Swagger**: https://localhost:8080/swagger/index.html
 
 ## 🧾 Notas
 - Los datos del SQL Server persisten gracias al volumen `sql_data`.
