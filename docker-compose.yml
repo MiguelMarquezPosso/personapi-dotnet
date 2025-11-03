@@ -1,24 +1,34 @@
-services:
-  personapi:
-    build: ./personapi-dotnet
-    container_name: personapi_dotnet
-    ports:
-      - "8080:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    depends_on:
-      - sqlserver
+version: '3.8'
 
+services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=Arqui2025!
+      - SA_PASSWORD=Arqui2025!
+      - MSSQL_PID=Express
     ports:
       - "1433:1433"
     volumes:
       - sql_data:/var/opt/mssql
+      - ./scripts:/docker-entrypoint-initdb.d
+    user: root  # Ejecutar como root para tener permisos
+    restart: unless-stopped
+
+  personapi:
+    build:
+      context: ./personapi-dotnet
+      dockerfile: Dockerfile
+    container_name: personapi_dotnet
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__PersonaDbContext=Server=sqlserver;Database=persona_db;User Id=sa;Password=Arqui2025!;TrustServerCertificate=True;
+    depends_on:
+      - sqlserver
+    restart: unless-stopped
 
 volumes:
   sql_data:

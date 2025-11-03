@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace personapi_dotnet.Models;
+﻿namespace personapi_dotnet.Models;
 
 public partial class Estudio
 {
@@ -9,7 +6,7 @@ public partial class Estudio
 
     public int CcPer { get; set; }
 
-    public DateOnly? Fecha { get; set; }
+    public DateTime? Fecha { get; set; }  // Cambiado de DateOnly? a DateTime?
 
     public string? Univer { get; set; }
 

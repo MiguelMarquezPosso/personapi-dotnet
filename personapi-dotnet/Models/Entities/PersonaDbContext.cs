@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace personapi_dotnet.Models;
 
@@ -33,7 +31,7 @@ public partial class PersonaDbContext : DbContext
 
             entity.Property(e => e.IdProf).HasColumnName("id_prof");
             entity.Property(e => e.CcPer).HasColumnName("cc_per");
-            entity.Property(e => e.Fecha).HasColumnName("fecha");
+            entity.Property(e => e.Fecha).HasColumnType("date").HasColumnName("fecha");
             entity.Property(e => e.Univer)
                 .HasMaxLength(50)
                 .IsUnicode(false)
