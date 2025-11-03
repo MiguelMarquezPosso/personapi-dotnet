@@ -25,5 +25,14 @@ services:
       - sqlserver
     restart: unless-stopped
 
+  ngrok-personapi:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command: http --url=smolderingly-unlarge-mariann.ngrok-free.dev personapi:8080 --log=stdout
+    environment:
+    - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    depends_on:
+    - personapi
+
 volumes:
   sql_data:
