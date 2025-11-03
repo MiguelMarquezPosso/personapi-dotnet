@@ -6,11 +6,13 @@
 *.vsidx
 *.vspid
 
-## Ignorar carpetas de compilación
+## Ignorar carpetas de compilaciï¿½n
 bin/
 obj/
 [Dd]ebug/
 [Rr]elease/
 
-## Ignorar archivos de configuración local
+## Ignorar archivos de configuraciï¿½n local
 appsettings.Development.local.json
+
+.env

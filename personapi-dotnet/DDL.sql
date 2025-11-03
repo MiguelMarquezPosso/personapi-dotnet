@@ -44,8 +44,8 @@ CREATE TABLE estudios (
     fecha DATE NULL,
     univer VARCHAR(50) NULL,
     CONSTRAINT PK_estudios PRIMARY KEY (id_prof, cc_per),
-    CONSTRAINT FK_estudio_persona FOREIGN KEY (cc_per) REFERENCES persona(cc),
-    CONSTRAINT FK_estudio_profesion FOREIGN KEY (id_prof) REFERENCES profesion(id)
+    CONSTRAINT FK_estudio_persona FOREIGN KEY (cc_per) REFERENCES persona(cc) ON DELETE CASCADE,
+    CONSTRAINT FK_estudio_profesion FOREIGN KEY (id_prof) REFERENCES profesion(id) ON DELETE CASCADE
 );
 GO
 
@@ -58,6 +58,6 @@ CREATE TABLE telefono (
     num VARCHAR(15) NOT NULL PRIMARY KEY,
     oper VARCHAR(45) NOT NULL,
     duenio INT NOT NULL,
-    CONSTRAINT FK_telefono_persona FOREIGN KEY (duenio) REFERENCES persona(cc)
+    CONSTRAINT FK_telefono_persona FOREIGN KEY (duenio) REFERENCES persona(cc) ON DELETE CASCADE
 );
 GO

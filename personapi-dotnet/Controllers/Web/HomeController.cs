@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace personapi_dotnet.Controllers
+namespace personapi_dotnet.Controllers.Web
 {
     public class HomeController : Controller
     {

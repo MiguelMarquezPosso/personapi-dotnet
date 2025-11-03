@@ -1,6 +1,21 @@
 services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Arqui2025!
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+      - ./scripts:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+
   personapi:
-    build: ./personapi-dotnet
+    build:
+      context: ./personapi-dotnet
+      dockerfile: Dockerfile
     container_name: personapi_dotnet
     ports:
       - "8080:8080"
@@ -8,17 +23,16 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
       - sqlserver
+    restart: unless-stopped
 
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver
+  ngrok-personapi:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command: http --url=smolderingly-unlarge-mariann.ngrok-free.dev personapi:8080 --log=stdout
     environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=Arqui2025!
-    ports:
-      - "1433:1433"
-    volumes:
-      - sql_data:/var/opt/mssql
+    - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    depends_on:
+    - personapi
 
 volumes:
   sql_data:

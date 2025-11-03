@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace personapi_dotnet.Models;
+namespace personapi_dotnet.Models.Entities;
 
 public partial class PersonaDbContext : DbContext
 {
@@ -41,18 +39,16 @@ public partial class PersonaDbContext : DbContext
 
             entity.HasOne(d => d.CcPerNavigation).WithMany(p => p.Estudios)
                 .HasForeignKey(d => d.CcPer)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_estudio_persona");
 
             entity.HasOne(d => d.IdProfNavigation).WithMany(p => p.Estudios)
                 .HasForeignKey(d => d.IdProf)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_estudio_profesion");
         });
 
         modelBuilder.Entity<Persona>(entity =>
         {
-            entity.HasKey(e => e.Cc).HasName("PK__persona__3213666D96191265");
+            entity.HasKey(e => e.Cc).HasName("PK__persona__3213666DD6BC5EF2");
 
             entity.ToTable("persona");
 
@@ -77,7 +73,7 @@ public partial class PersonaDbContext : DbContext
 
         modelBuilder.Entity<Profesion>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__profesio__3213E83F7E4E0573");
+            entity.HasKey(e => e.Id).HasName("PK__profesio__3213E83F7A784EBA");
 
             entity.ToTable("profesion");
 
@@ -93,7 +89,7 @@ public partial class PersonaDbContext : DbContext
 
         modelBuilder.Entity<Telefono>(entity =>
         {
-            entity.HasKey(e => e.Num).HasName("PK__telefono__DF908D65F7E97047");
+            entity.HasKey(e => e.Num).HasName("PK__telefono__DF908D65C3D31710");
 
             entity.ToTable("telefono");
 
@@ -109,7 +105,6 @@ public partial class PersonaDbContext : DbContext
 
             entity.HasOne(d => d.DuenioNavigation).WithMany(p => p.Telefonos)
                 .HasForeignKey(d => d.Duenio)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_telefono_persona");
         });
 

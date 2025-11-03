@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using personapi_dotnet.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using personapi_dotnet.Models.Entities;
+using personapi_dotnet.Interfaces;
 
-namespace personapi_dotnet.Controllers
+namespace personapi_dotnet.Controllers.Web
 {
     public class ProfesionController : Controller
     {
-        private readonly PersonaDbContext _context;
+        private readonly IProfesionRepository _repository;
 
-        public ProfesionController(PersonaDbContext context)
+        public ProfesionController(IProfesionRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: Profesion
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Profesions.ToListAsync());
+            return View(await _repository.GetAllAsync());
         }
 
         // GET: Profesion/Details/5
@@ -32,8 +27,7 @@ namespace personapi_dotnet.Controllers
                 return NotFound();
             }
 
-            var profesion = await _context.Profesions
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var profesion = await _repository.GetByIdAsync(id.Value);
             if (profesion == null)
             {
                 return NotFound();
@@ -49,16 +43,13 @@ namespace personapi_dotnet.Controllers
         }
 
         // POST: Profesion/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nom,Des")] Profesion profesion)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(profesion);
-                await _context.SaveChangesAsync();
+                await _repository.CreateAsync(profesion);
                 return RedirectToAction(nameof(Index));
             }
             return View(profesion);
@@ -72,7 +63,7 @@ namespace personapi_dotnet.Controllers
                 return NotFound();
             }
 
-            var profesion = await _context.Profesions.FindAsync(id);
+            var profesion = await _repository.GetByIdAsync(id.Value);
             if (profesion == null)
             {
                 return NotFound();
@@ -81,8 +72,6 @@ namespace personapi_dotnet.Controllers
         }
 
         // POST: Profesion/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nom,Des")] Profesion profesion)
@@ -96,12 +85,11 @@ namespace personapi_dotnet.Controllers
             {
                 try
                 {
-                    _context.Update(profesion);
-                    await _context.SaveChangesAsync();
+                    await _repository.UpdateAsync(profesion);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception)
                 {
-                    if (!ProfesionExists(profesion.Id))
+                    if (!await ProfesionExists(profesion.Id))
                     {
                         return NotFound();
                     }
@@ -123,8 +111,7 @@ namespace personapi_dotnet.Controllers
                 return NotFound();
             }
 
-            var profesion = await _context.Profesions
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var profesion = await _repository.GetByIdAsync(id.Value);
             if (profesion == null)
             {
                 return NotFound();
@@ -138,19 +125,13 @@ namespace personapi_dotnet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var profesion = await _context.Profesions.FindAsync(id);
-            if (profesion != null)
-            {
-                _context.Profesions.Remove(profesion);
-            }
-
-            await _context.SaveChangesAsync();
+            await _repository.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProfesionExists(int id)
+        private async Task<bool> ProfesionExists(int id)
         {
-            return _context.Profesions.Any(e => e.Id == id);
+            return await _repository.GetByIdAsync(id) != null;
         }
     }
 }

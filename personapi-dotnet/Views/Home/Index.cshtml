@@ -1,4 +1,53 @@
-﻿<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bienvenido a Persona API</h1>
+    <p>Sistema de gestión integral de personas, profesiones, estudios y teléfonos.</p>
+    
+    <div class="row mt-5">
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Personas</h5>
+                    <p class="card-text">Gestión de información personal</p>
+                    <a asp-controller="Persona" asp-action="Index" class="btn btn-light">Acceder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Profesiones</h5>
+                    <p class="card-text">Catálogo de profesiones</p>
+                    <a asp-controller="Profesion" asp-action="Index" class="btn btn-light">Acceder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <h5 class="card-title">Estudios</h5>
+                    <p class="card-text">Registro de estudios</p>
+                    <a asp-controller="Estudios" asp-action="Index" class="btn btn-light">Acceder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <h5 class="card-title">Teléfonos</h5>
+                    <p class="card-text">Gestión de números telefónicos</p>
+                    <a asp-controller="Telefono" asp-action="Index" class="btn btn-light">Acceder</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="/swagger" class="btn btn-outline-dark" target="_blank">
+            📚 Ver Documentación API
+        </a>
+    </div>
 </div>

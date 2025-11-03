@@ -1,6 +1,8 @@
-﻿# PersonAPI .NET
+﻿# Persona API - ASP.NET MVC con API REST
 
-Proyecto monolito MVC + DAO desarrollado en **.NET 8** con **SQL Server 2022** y desplegado mediante **Docker Compose**.
+| Pruebe la aplicación _(Disponible hasta 01/12/2025)_ : [Abrir Persona API](https://smolderingly-unlarge-mariann.ngrok-free.dev/)
+
+Sistema completo de gestión de personas, profesiones, estudios y teléfonos implementado en **ASP.NET Core 8** con arquitectura **MVC + DAO** y **API REST**.
 
 ## Integrantes
 - [Miguel Posso](https://github.com/MiguelMarquezPosso)
@@ -25,10 +27,12 @@ Proyecto monolito MVC + DAO desarrollado en **.NET 8** con **SQL Server 2022** y
    docker compose up --build
    ```
 
-3. Esperar a que SQL Server termine de iniciar. Luego acceder a la API en:
-   [http://localhost:8080/home](http://localhost:8080/home)
+3. _(Solo la primera vez)_ Asegurese de crear la base de datos `persona_db` y llenarla usando el `DDL.sql` y `DML.sql`. La cadena de conexión está en `appsettings.json`:
+ 
+4. Esperar a que SQL Server termine de iniciar. Luego acceder a la API en:
+   [http://localhost:8080/Home](http://localhost:8080/Home)
 
-4. Para detener los servicios:
+5. Para detener los servicios:
    ```bash
    docker compose down
    ```
@@ -36,16 +40,79 @@ Proyecto monolito MVC + DAO desarrollado en **.NET 8** con **SQL Server 2022** y
 ## 🧩 Estructura del proyecto
 ```
 personapi-dotnet/
-├── personapi-dotnet/       # Código fuente del proyecto ASP.NET MVC
-│   ├── Controllers/
-│   ├── Models/
-│   ├── Views/
-│   ├── appsettings.json
-│   ├── Dockerfile
-│   └── personapi-dotnet.csproj
-├── docker-compose.yml
+├── Controllers/
+│   ├── Web/
+│   │   ├── EstudiosController.cs
+│   │   ├── HomeController.cs
+│   │   ├── PersonaController.cs
+│   │   ├── ProfesionController.cs
+│   │   └── TelefonoController.cs
+│   └── Api/
+│       ├── EstudiosController.cs
+│       ├── PersonasController.cs
+│       ├── ProfesionesController.cs
+│       └── TelefonosController.cs
+├── Interfaces/
+│   ├── IEstudioRepository.cs
+│   ├── IPersonaRepository.cs
+│   ├── IProfesionRepository.cs
+│   └── ITelefonoRepository.cs
+├── Repositories/
+│   ├── EstudioRepository.cs
+│   ├── PersonaRepository.cs
+│   ├── ProfesionRepository.cs
+│   └── TelefonoRepository.cs
+├── Models/
+│   └── Entities/
+│       ├── PersonaDbContext.cs
+│       ├── Estudio.cs
+│       ├── Persona.cs
+│       ├── Profesion.cs
+│       └── Telefono.cs
+├── Views/
+│   ├── Home/
+│   │   └── Index.cshtml
+│   ├── Persona/
+│   │   ├── Index.cshtml
+│   │   ├── Create.cshtml
+│   │   ├── Edit.cshtml
+│   │   ├── Details.cshtml
+│   │   └── Delete.cshtml
+│   ├── Estudios/
+│   │   ├── Index.cshtml
+│   │   ├── Create.cshtml
+│   │   ├── Edit.cshtml
+│   │   ├── Details.cshtml
+│   │   └── Delete.cshtml
+│   ├── Profesion/
+│   │   ├── Index.cshtml
+│   │   ├── Create.cshtml
+│   │   ├── Edit.cshtml
+│   │   ├── Details.cshtml
+│   │   └── Delete.cshtml
+│   ├── Telefono/
+│   │   ├── Index.cshtml
+│   │   ├── Create.cshtml
+│   │   ├── Edit.cshtml
+│   │   ├── Details.cshtml
+│   │   └── Delete.cshtml
+│   └── Shared/
+│       └── _Layout.cshtml
+├── Program.cs
+├── appsettings.json
+├── personapi-dotnet.csproj
 └── README.md
 ```
+
+## 📊 Entidades
+1. **Persona** - Información personal
+2. **Profesion** - Catálogo de profesiones
+3. **Estudio** - Relación personas-profesiones
+4. **Telefono** - Números telefónicos
+
+### URLs de Acceso
+- **Interfaz Web**: https://localhost:8080/Home
+- **API Swagger**: https://localhost:8080/swagger/index.html
 
 ## 🧾 Notas
 - Los datos del SQL Server persisten gracias al volumen `sql_data`.

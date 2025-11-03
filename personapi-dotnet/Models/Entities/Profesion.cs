@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace personapi_dotnet.Models;
+﻿namespace personapi_dotnet.Models.Entities;
 
 public partial class Profesion
 {

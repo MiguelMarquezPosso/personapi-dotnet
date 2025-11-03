@@ -1,53 +1,45 @@
-﻿@model IEnumerable<personapi_dotnet.Models.Estudio>
+﻿@model IEnumerable<personapi_dotnet.Models.Entities.Estudio>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Estudios";
 }
 
 <h1>Estudios</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo Estudio</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Univer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CcPerNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdProfNavigation)
-            </th>
-            <th></th>
-        </tr>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+    <tr>
+        <th>Profesión ID</th>
+        <th>Persona CC</th>
+        <th>Fecha</th>
+        <th>Universidad</th>
+        <th>Persona</th>
+        <th>Profesión</th>
+        <th>Acciones</th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
+            <td>@Html.DisplayFor(modelItem => item.IdProf)</td>
+            <td>@Html.DisplayFor(modelItem => item.CcPer)</td>
+            <td>@Html.DisplayFor(modelItem => item.Fecha)</td>
+            <td>@Html.DisplayFor(modelItem => item.Univer)</td>
+            <td>@Html.DisplayFor(modelItem => item.CcPerNavigation.Nombre) @Html.DisplayFor(modelItem => item.CcPerNavigation.Apellido)</td>
+            <td>@Html.DisplayFor(modelItem => item.IdProfNavigation.Nom)</td>
             <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Univer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CcPerNavigation.Cc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdProfNavigation.Id)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <div class="btn-group" role="group">
+                    <a asp-action="Edit" asp-route-idProf="@item.IdProf" asp-route-ccPer="@item.CcPer" class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-action="Details" asp-route-idProf="@item.IdProf" asp-route-ccPer="@item.CcPer" class="btn btn-info btn-sm">Detalles</a>
+                    <a asp-action="Delete" asp-route-idProf="@item.IdProf" asp-route-ccPer="@item.CcPer" class="btn btn-danger btn-sm">Eliminar</a>
+                </div>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
