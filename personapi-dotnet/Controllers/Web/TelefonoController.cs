@@ -46,13 +46,13 @@ namespace personapi_dotnet.Controllers.Web
         public async Task<IActionResult> Create()
         {
             var personas = await _personaRepository.GetAllAsync();
-            ViewData["Duenio"] = new SelectList(personas, "Cc", "Cc");
+            ViewData["Duenio"] = new SelectList(personas, "Cc", "Nombre");
             return View();
         }
 
         // POST: Telefono/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Num,Oper,Duenio")] Telefono telefono)
         {
             if (ModelState.IsValid)
@@ -61,7 +61,7 @@ namespace personapi_dotnet.Controllers.Web
                 return RedirectToAction(nameof(Index));
             }
             var personas = await _personaRepository.GetAllAsync();
-            ViewData["Duenio"] = new SelectList(personas, "Cc", "Cc", telefono.Duenio);
+            ViewData["Duenio"] = new SelectList(personas, "Cc", "Nombre", telefono.Duenio);
             return View(telefono);
         }
 
@@ -113,7 +113,7 @@ namespace personapi_dotnet.Controllers.Web
                 return RedirectToAction(nameof(Index));
             }
             var personas = await _personaRepository.GetAllAsync();
-            ViewData["Duenio"] = new SelectList(personas, "Cc", "Cc", telefono.Duenio);
+            ViewData["Duenio"] = new SelectList(personas, "Cc", "Nombre", telefono.Duenio);
             return View(telefono);
         }
 

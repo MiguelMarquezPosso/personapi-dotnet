@@ -46,8 +46,8 @@ namespace personapi_dotnet.Controllers.Web
             var personas = await _personaRepository.GetAllAsync();
             var profesiones = await _profesionRepository.GetAllAsync();
 
-            ViewData["CcPer"] = new SelectList(personas, "Cc", "Cc");
-            ViewData["IdProf"] = new SelectList(profesiones, "Id", "Id");
+            ViewData["CcPer"] = new SelectList(personas, "Cc", "Nombre");
+            ViewData["IdProf"] = new SelectList(profesiones, "Id", "Nom");
             return View();
         }
 
@@ -63,8 +63,8 @@ namespace personapi_dotnet.Controllers.Web
 
             var personas = await _personaRepository.GetAllAsync();
             var profesiones = await _profesionRepository.GetAllAsync();
-            ViewData["CcPer"] = new SelectList(personas, "Cc", "Cc", estudio.CcPer);
-            ViewData["IdProf"] = new SelectList(profesiones, "Id", "Id", estudio.IdProf);
+            ViewData["CcPer"] = new SelectList(personas, "Cc", "Nombre", estudio.CcPer);
+            ViewData["IdProf"] = new SelectList(profesiones, "Id", "Nom", estudio.IdProf);
             return View(estudio);
         }
 
@@ -79,8 +79,8 @@ namespace personapi_dotnet.Controllers.Web
 
             var personas = await _personaRepository.GetAllAsync();
             var profesiones = await _profesionRepository.GetAllAsync();
-            ViewData["CcPer"] = new SelectList(personas, "Cc", "Cc", estudio.CcPer);
-            ViewData["IdProf"] = new SelectList(profesiones, "Id", "Id", estudio.IdProf);
+            ViewData["CcPer"] = new SelectList(personas, "Cc", "Nombre", estudio.CcPer);
+            ViewData["IdProf"] = new SelectList(profesiones, "Id", "Nom", estudio.IdProf);
             return View(estudio);
         }
 
@@ -115,8 +115,8 @@ namespace personapi_dotnet.Controllers.Web
 
             var personas = await _personaRepository.GetAllAsync();
             var profesiones = await _profesionRepository.GetAllAsync();
-            ViewData["CcPer"] = new SelectList(personas, "Cc", "Cc", estudio.CcPer);
-            ViewData["IdProf"] = new SelectList(profesiones, "Id", "Id", estudio.IdProf);
+            ViewData["CcPer"] = new SelectList(personas, "Cc", "Nombre", estudio.CcPer);
+            ViewData["IdProf"] = new SelectList(profesiones, "Id", "Nom", estudio.IdProf);
             return View(estudio);
         }
 

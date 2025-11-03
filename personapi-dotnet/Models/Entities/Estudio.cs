@@ -1,4 +1,6 @@
-﻿namespace personapi_dotnet.Models.Entities;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace personapi_dotnet.Models.Entities;
 
 public partial class Estudio
 {
@@ -10,7 +12,8 @@ public partial class Estudio
 
     public string? Univer { get; set; }
 
+    [ValidateNever]
     public virtual Persona CcPerNavigation { get; set; } = null!;
-
+    [ValidateNever]
     public virtual Profesion IdProfNavigation { get; set; } = null!;
 }
