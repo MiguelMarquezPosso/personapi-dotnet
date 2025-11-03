@@ -9,21 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
 
-// Configure DbContext with enhanced retry logic
 builder.Services.AddDbContext<PersonaDbContext>(options =>
 {
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("PersonaDbContext"),
-        sqlServerOptions => 
-        {
-            sqlServerOptions.EnableRetryOnFailure(
-                maxRetryCount: 10,                    // Más reintentos
-                maxRetryDelay: TimeSpan.FromSeconds(30), // Más tiempo entre reintentos
-                errorNumbersToAdd: null
-            );
-            sqlServerOptions.CommandTimeout(60);      // Timeout más largo
-        }
-    );
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PersonaDbContext"));
 });
 
 // Register repositories
